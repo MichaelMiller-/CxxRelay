@@ -103,8 +103,6 @@ int main() {
 
 The registered metadata provides the foundation for JSON arguments, tool definitions, and communication with language models. **The model does not invoke C++ methods directly:** the host validates and executes the proposed operations.
 
-> **Note on the current codebase:** The project is now called **CxxRelay**, but its headers, C++ namespace, and CMake targets still use `reflection` and `CxxRelay::core`. The underlying code has not yet been renamed.
-
 ## Quick start: End-to-end prototype
 
 The included prototype connects a script-based browser chat to a persistent C++ worker through a local Python HTTP server.
@@ -141,8 +139,6 @@ export OPENAI_MODEL='...'
 
 Do **not** put API keys into source code, the browser UI, or your Git repository. The current OpenAI adapter continues conversations using `store: true` and `previous_response_id`, so chat content and potentially tool data are sent to the provider.
 
-For details, see [`prototype/README.md`](prototype/README.md).
-
 ## Build and test
 
 ```bash
@@ -155,8 +151,6 @@ cmake -S . -B build-tests -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON
 cmake --build build-tests --parallel
 ctest --test-dir build-tests --output-on-failure
 ```
-
-The HTTPS transport is optional and can be disabled with `-DREFLECTION_BUILD_OPENAI_CURL=OFF` if needed.
 
 ## Security principles
 
