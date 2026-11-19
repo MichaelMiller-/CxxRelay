@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content="__CSRF_TOKEN__" />
+  <title>Reflection Chat – Workflow-Test</title>
+  <link href="/style.css" rel="stylesheet" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="mark">&lt;/&gt;</div>
+      <div class="brand">
+        <h1>Reflection Chat <span>Testbench</span></h1>
+        <p>C++ Worker · Tool-Calling · lokale Browser-GUI</p>
+      </div>
+      <span class="pill" id="mode">Verbinde …</span>
+    </header>
+    <main class="layout">
+      <section class="chat panel" aria-label="Chat">
+        <div class="panelbar">
+          <div><strong>Chat-Konversation</strong><small>Tool-Aufrufe und Bestätigungen im selben Ablauf</small></div>
+          <div class="actions">
+            <button class="subtle" id="reset">Neuer Chat</button>
+            <button class="subtle danger" id="cancel" disabled>Abbrechen</button>
+          </div>
+        </div>
+        <div class="messages" id="messages" role="log" aria-live="polite">
+          <div class="message assistant"><div class="author">Testbench</div><div class="body">Willkommen! Teste den kompletten Weg vom Browser über den C++-Worker bis zur Reflection-API. Starte mit einem der Beispielbefehle.</div></div>
+        </div>
+        <div class="suggestions" id="suggestions">
+          <button data-prompt="Liste alle Dokumente">Alle Dokumente</button>
+          <button data-prompt="Suche nach Bericht">Suche nach Bericht</button>
+          <button data-prompt="Benenne Dokument 1 um in Abschlussbericht">Dokument umbenennen</button>
+        </div>
+        <form id="chat-form" class="composer">
+          <textarea id="prompt" rows="2" placeholder="Frage stellen oder C++-Operation anfordern …" aria-label="Nachricht" maxlength="16000" required></textarea>
+          <button id="send" type="submit">Senden <span aria-hidden="true">↗</span></button>
+        </form>
+      </section>
+      <aside class="sidebar">
+        <section class="panel">
+          <div class="panelbar"><div><strong>Worker-Zustand</strong><small>Aktuelle Objekte aus C++</small></div><button class="refresh" id="refresh" title="Aktualisieren" aria-label="Aktualisieren">↻</button></div>
+          <div id="documents" class="documents">Lade Dokumente …</div>
+        </section>
+        <section class="panel">
+          <div class="panelbar"><div><strong>Reflection &amp; Tools</strong><small>Im Worker registrierte Schnittstellen</small></div></div>
+          <div class="reflection" id="reflection"></div>
+        </section>
+        <section class="panel">
+          <div class="panelbar"><strong>Ereignisprotokoll</strong><small>Live</small></div>
+          <div class="events" id="events"><div class="event muted">Noch keine Ereignisse</div></div>
+        </section>
+      </aside>
+    </main>
+    <footer>Lokaler Entwicklungstest · Kein öffentlich erreichbarer Server · Mock-Modus ohne API-Schlüssel</footer>
+  </div>
+  <div class="overlay hidden" id="overlay" role="presentation">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="approval-title">
+      <span class="warnicon" aria-hidden="true">!</span>
+      <h2 id="approval-title">Schreiboperation freigeben?</h2>
+      <p>Die KI hat eine Änderung vorgeschlagen. Bitte prüfe die genaue Operation und ihre Parameter. Ohne deine Freigabe wird nichts geändert.</p>
+      <code id="tool-name"></code>
+      <pre id="tool-arguments"></pre>
+      <div class="modalbuttons">
+        <button class="subtle" id="deny">Ablehnen</button>
+        <button class="confirm" id="approve">Änderung erlauben</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

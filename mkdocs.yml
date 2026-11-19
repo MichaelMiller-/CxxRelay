@@ -1,0 +1,54 @@
+# To view the documentation locally on your machine, use the following steps
+#
+# Clone the repository locally, then on the command line:
+#
+#   python -m venv .venv
+#   source .venv/bin/activate
+#   pip install mkdocs-material
+#   mkdocs new .
+#   mkdocs serve
+#
+#
+site_name: "CxxRelay"
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.instant
+    - navigation.instant.preview
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotate
+    - content.code.annotation
+    - content.code.copy
+    - content.footnote.tooltips
+  language: en
+  palette:
+    - scheme: slate
+
+nav:
+  - 'Welcome & getting started': index.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.mark
+  - attr_list
+
+copyright: |
+  &copy <a href="https://github.com/MichaelMiller-" target="_blank" rel="noopener">Michael Miller</a> &bull; <a href="https://github.com/MichaelMiller-/CxxRelay/blob/master/LICENSE"> License</a>

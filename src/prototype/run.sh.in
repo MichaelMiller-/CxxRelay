@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT=@PROJECT_SOURCE_DIR@
+MODE="${1:-mock}"
+
+case "$MODE" in mock|openai) ;; *) echo "Usage: $0 [mock|openai]" >&2; exit 2;; esac
+
+# cmake -S "$ROOT" -B "$ROOT/_build" -DBUILD_TESTING=OFF -DREFLECTION_BUILD_EXAMPLES=OFF
+# cmake --build "$ROOT/_build" --target prototype.worker -j 2
+
+exec python3 "@CMAKE_CURRENT_LIST_DIR@/server.py" --mode "$MODE" --worker "@CMAKE_CURRENT_BINARY_DIR@/prototype.worker"
