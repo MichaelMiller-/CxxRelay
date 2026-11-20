@@ -81,7 +81,9 @@ function Resolve-CxxRelayWorker {
         }
         return $resolved
     }
+    # TODO: replace hardcoded paths
     $candidates = @(
+        'out\build\x64-Debug\src\prototype\prototype.worker.exe'
         'build-win\Release\prototype.worker.exe',
         'build-win\Debug\prototype.worker.exe',
         'build-win\prototype.worker.exe',
@@ -157,8 +159,6 @@ $header.Controls.Add($script:CancelButton)
 $split = [System.Windows.Forms.SplitContainer]::new()
 $split.Dock = [System.Windows.Forms.DockStyle]::Fill
 $split.Orientation = [System.Windows.Forms.Orientation]::Vertical
-$split.Panel1MinSize = 330
-$split.Panel2MinSize = 230
 $root.Controls.Add($split, 0, 1)
 
 $script:Chat = [System.Windows.Forms.RichTextBox]::new()
@@ -523,9 +523,18 @@ $script:UiTimer.Add_Tick({
 })
 
 $script:Form.Add_Shown({
-    if ($split.Width -gt 700) {
-        $split.SplitterDistance = [int] ($split.Width * 0.67)
+    $minPanel1 = 330
+    $minPanel2 = 230
+    $maxDistance = $split.Width - $split.SplitterWidth - $minPanel2
+
+    if ($maxDistance -ge $minPanel1) {
+        $distance = [int] ($split.Width * 0.67)
+        $distance = [Math]::Max($minPanel1, [Math]::Min($distance, $maxDistance))
+        $split.SplitterDistance = $distance
+        $split.Panel1MinSize = $minPanel1
+        $split.Panel2MinSize = $minPanel2
     }
+
     Write-Chat 'System' 'Willkommen! Teste den C++ Worker im Mock-Modus oder mit einem echten Modell. Enter sendet, Shift+Enter erzeugt einen Zeilenumbruch.'
     $script:UiTimer.Start()
     Request-Worker 'snapshot'
