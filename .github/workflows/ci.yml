@@ -1,0 +1,62 @@
+name: CxxRelay CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    name: Linux / ${{ matrix.compiler }}
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        compiler: [ gcc, clang ]
+        config: [ Debug, Release ]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Select compiler
+        shell: bash
+        run: |
+          if [[ '${{ matrix.compiler }}' == 'clang' ]]; then
+            echo 'CC=clang-18' >> "$GITHUB_ENV"
+            echo 'CXX=clang++-18' >> "$GITHUB_ENV"
+          else
+            echo 'CC=gcc' >> "$GITHUB_ENV"
+            echo 'CXX=g++' >> "$GITHUB_ENV"
+          fi
+
+      - name: Configure
+        run: cmake -S . -B _build -DCMAKE_BUILD_TYPE=${{matrix.config}} -DBUILD_TESTING=ON
+
+      - name: Build
+        run: cmake --build _build --config ${{matrix.config}}
+
+      - name: Run Unit-tests
+        run: ctest --test-dir _build --build-config ${{matrix.config}} --rerun-failed --output-on-failure
+
+  windows:
+    name: Windows / MSVC x64
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        config: [ Debug, Release ]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Configure CxxRelay
+        run: cmake -S . -B _build -DCMAKE_BUILD_TYPE=${{matrix.config}} -DBUILD_TESTING=ON
+
+      - name: Build
+        run: cmake --build _build --config ${{matrix.config}}
+
+      - name: Run Unit-tests
+        run: ctest --test-dir _build --build-config ${{matrix.config}} --rerun-failed --output-on-failure
