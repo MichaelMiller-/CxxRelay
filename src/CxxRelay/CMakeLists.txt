@@ -21,7 +21,12 @@ CPMAddPackage(
         GITHUB_REPOSITORY curl/curl
         GIT_TAG curl-8_22_0
         OPTIONS
+        "BUILD_STATIC_LIBS ON"
+        "BUILD_SHARED_LIBS OFF"
+        "BUILD_CURL_EXE OFF"
+        "BUILD_EXAMPLES OFF"
         "CURL_USE_LIBPSL OFF"
+        "CURL_DISABLE_INSTALL OFF"
 )
 
 target_link_libraries(CxxRelay PRIVATE CURL::libcurl)
