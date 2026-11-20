@@ -1,5 +1,7 @@
 # CxxRelay
 
+[![CxxRelay CI](https://github.com/MichaelMiller-/CxxRelay/actions/workflows/ci.yml/badge.svg)](https://github.com/MichaelMiller-/CxxRelay/actions/workflows/ci.yml)
+
 **Bringing AI to existing C++ software.**
 
 CxxRelay is a modular C++20 framework that **connects existing C++ applications to artificial intelligence**—without requiring you to rewrite their business logic.
