@@ -1,4 +1,11 @@
-find_package(Catch2 3 CONFIG REQUIRED)
+CPMAddPackage(
+        NAME Catch2
+        GITHUB_REPOSITORY catchorg/Catch2
+        GIT_TAG v3.15.0
+        OPTIONS
+        "CATCH_INSTALL_DOCS OFF"
+        "CATCH_INSTALL_EXTRAS OFF"
+)
 
 function(test filename)
     set(target_name test.${filename})

@@ -16,7 +16,11 @@ target_include_directories(CxxRelay PUBLIC
 
 ## Dependencies
 ##
-find_package(CURL REQUIRED)
+CPMAddPackage(
+        NAME curl
+        GITHUB_REPOSITORY curl/curl
+        GIT_TAG curl-8_22_0
+)
 
 target_link_libraries(CxxRelay PRIVATE CURL::libcurl)
 target_link_libraries(CxxRelay PRIVATE CxxRelay::enable_compiler_warnings)
