@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-option(CXX_RELAY_BUILD_EXAMPLES "Build sample executables" ON)
+option(CXXRELAY_BUILD_EXAMPLES "Build sample executables" ON)
 
 project(CxxRelay VERSION 0.1.0 LANGUAGES CXX)
 
@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 20)
 ##
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(FetchContent)
+include(CMakePrintHelpers)
 
 ## Link to this 'library' in order to use the warnings specified in CompilerWarnings.cmake
 ##
