@@ -105,41 +105,115 @@ int main() {
 
 The registered metadata provides the foundation for JSON arguments, tool definitions, and communication with language models. **The model does not invoke C++ methods directly:** the host validates and executes the proposed operations.
 
-## Quick start: End-to-end prototype
 
-The included prototype connects a script-based browser chat to a persistent C++ worker through a local Python HTTP server.
+## Quick start: Run the chat prototype with CMake
 
-**Requirements:** Linux, a C++20 compiler, CMake 3.20 or later, and Python 3. The offline prototype does not require Qt, Node.js, or additional Python packages.
+**The recommended development workflow is to configure CxxRelay once in CMake (or in your IDE) and start the desired prototype using a CMake target.** You do not need to launch the worker separately.
+
+### Requirements
+
+- **All platforms:** CMake 3.20+, a C++20 compiler, and the CxxRelay source tree.
+- **Browser interface (Linux, macOS, Windows):** Python 3. The HTTP server uses the Python standard library; no additional Python packages are needed.
+- **Native Windows Forms interface (Windows only):** Windows PowerShell 5.1. 
+- **OpenAI mode (optional):** A compatible OpenAI model, and an API key.
+
+### Configure the prototype in your IDE
+
+The following CMake cache variables control **both** prototype targets:
+
+| CMake variable                      | Default | Description                                                                                                               |
+|-------------------------------------|---------|---------------------------------------------------------------------------------------------------------------------------|
+| `CXXRELAY_PROTOTYPE_MODE`           | `mock`  | Select `mock` or `openai`                                                                                                 |
+| `CXXRELAY_PROTOTYPE_OPENAI_API_KEY` | Empty   | Optional OpenAI API key. Prefer the `OPENAI_API_KEY` environment variable instead of placing a secret in the CMake cache. |
+| `CXXRELAY_PROTOTYPE_OPENAI_MODEL`   | Empty   | OpenAI model identifier; required for `openai` mode.                                                                      |
+
+`mock` is the default and needs no account, API key, or network connection. In `openai` mode, CMake checks the required model, an API key supplied through the cache **or** `OPENAI_API_KEY`. Invalid modes or missing requirements cause configuration to fail.
+
+> **API key security:** CMake cache entries are stored in `CMakeCache.txt` and may also appear in generated build commands or logs. For real credentials, set `OPENAI_API_KEY` in the environment used by **both the IDE's CMake configuration and the launched target**. Do not commit local cache files or secrets. The cache variable is provided for convenience, not secure secret storage.
+
+### Start in mock mode (recommended first run)
+
+Configure once from your IDE, or use the command line:
 
 ```bash
-./prototype/run.sh mock
+cmake -S . -B build -DBUILD_TESTING=OFF -DCXXRELAY_PROTOTYPE_MODE=mock
 ```
 
-Then open this address in your browser:
-
-```text
-http://127.0.0.1:8765/
-```
-
-Try these example requests:
-
-- `List all documents`
-- `Search for Bericht`
-- `Rename document 1 to Abschlussbericht`
-
-A rename operation is executed only after you confirm it in the chat UI. The mock provider is deterministic and is intended solely for workflow testing. Its supported prompts may differ from the English examples above; see the prototype documentation for the exact commands.
-
-### Optional: Connect to OpenAI
-
-With the libcurl development package installed and valid API credentials:
+On **Linux, macOS, or Windows**, start the browser chat:
 
 ```bash
-export OPENAI_API_KEY='...'
-export OPENAI_MODEL='...'
-./prototype/run.sh openai
+cmake --build build --target prototype-python
 ```
 
-Do **not** put API keys into source code, the browser UI, or your Git repository. The current OpenAI adapter continues conversations using `store: true` and `previous_response_id`, so chat content and potentially tool data are sent to the provider.
+Open `http://127.0.0.1:8765/` in your browser. Stop the server with `Ctrl+C` in the running terminal.
+
+On **Windows**, you can instead start the native Windows Forms chat:
+
+```powershell
+cmake --build build --config Debug --target prototype-powershell
+```
+
+For multi-configuration generators such as Visual Studio, use the matching `--config` value (`Debug` or `Release`). Both targets are interactive; they are not run during a normal `cmake --build` or by CTest. You can also select them as build targets in a CMake-aware IDE.
+
+### Enable OpenAI mode
+
+First make `OPENAI_API_KEY` available to the CMake configuration process and to the prototype's runtime. On Linux/macOS, for example:
+
+```bash
+export OPENAI_API_KEY='your-api-key'
+cmake -S . -B build -DBUILD_TESTING=OFF \
+    -DCXXRELAY_PROTOTYPE_MODE=openai \
+    -DCXXRELAY_PROTOTYPE_OPENAI_MODEL='your-model' \
+    -DREFLECTION_BUILD_OPENAI_CURL=ON
+cmake --build build --target prototype-python
+```
+
+On Windows PowerShell, the equivalent is:
+
+```powershell
+$env:OPENAI_API_KEY = 'your-api-key'
+cmake -S . -B build -DBUILD_TESTING=OFF `
+    -DCXXRELAY_PROTOTYPE_MODE=openai `
+    -DCXXRELAY_PROTOTYPE_OPENAI_MODEL=your-model `
+    -DREFLECTION_BUILD_OPENAI_CURL=ON
+cmake --build build --config Debug --target prototype-powershell
+```
+
+The exact model name must be one available to your API account. In an IDE, set the non-secret variables in its **CMake settings** and supply `OPENAI_API_KEY` through a trusted environment configuration. After changing the CMake settings, reconfigure and launch the same prototype target again; you do not need to change the scripts.
+
+### Fallback: Run the scripts directly
+
+Direct script execution remains available for development or troubleshooting, but **CMake targets are the preferred workflow**.
+
+On **Linux/macOS**, the shell script configures and builds the worker before starting the browser interface:
+
+```bash
+<BUILD>/src/prototype/run.sh mock
+
+# Optional OpenAI mode
+export OPENAI_API_KEY='your-api-key'
+export OPENAI_MODEL='your-model'
+<BUILD>/src/prototype/run.sh openai
+```
+
+On **Windows**, build and launch the Windows Forms prototype using the PowerShell scripts. Run the UI with Windows PowerShell in STA mode:
+
+```powershell
+powershell.exe -NoProfile -STA -File .\prototype\start.ps1 -Mode mock
+
+# Optional OpenAI mode
+$env:OPENAI_API_KEY = 'your-api-key'
+$env:OPENAI_MODEL = 'your-model'
+powershell.exe -NoProfile -STA -File .\prototype\start.ps1 -Mode openai
+```
+
+The direct scripts use the worker's normal `OPENAI_API_KEY` and `OPENAI_MODEL` environment variables. Unlike the CMake-target workflow, they are responsible for their own build configuration and worker path selection. 
+
+The mock provider recognizes a limited set of prompts. Try `List all documents`, `Search for Bericht`, or `Rename document 1 to Abschlussbericht` in the mock UI. A rename is performed only after explicit confirmation. 
+
+The OpenAI adapter uses `store: true` and `previous_response_id` for conversation continuation. Relevant prompts and tool data may therefore be sent to the provider.
+
+
 
 ## Build and test
 

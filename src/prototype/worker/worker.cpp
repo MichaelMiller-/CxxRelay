@@ -92,6 +92,8 @@ namespace
    public:
       explicit Worker(bool openai) : tools_(registry_)
       {
+         // Register existing classes
+         //
          registry_.type<Document>("Document")
             .field("id", &Document::id)
             .field("title", &Document::title)
@@ -113,6 +115,8 @@ namespace
                                                                                              : "failed"}}));
          });
 
+         // Setup AI
+         //
          if (openai) {
             auto const key = std::getenv("OPENAI_API_KEY");
             auto const model = std::getenv("OPENAI_MODEL");

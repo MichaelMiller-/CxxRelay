@@ -1,15 +1,14 @@
 ﻿#requires -Version 5.1
 <#
 .SYNOPSIS
-  Native Windows Forms chat for the CxxRelay JSONL C++ worker.
+  Native Windows Forms chat for the CxxRelay C++ worker.
 .DESCRIPTION
-  Runs on Windows PowerShell 5.1 without Python, a local web server,
-  browsers, or third-party PowerShell modules. The worker is a persistent
-  child process communicating via UTF-8 JSON lines over stdin/stdout.
+  Runs on Windows PowerShell 5.1 without Python, a local web server, browsers, or third-party PowerShell modules.
+  The worker is a persistent child process communicating via UTF-8 JSON lines over stdin/stdout.
 .EXAMPLE
-  powershell.exe -NoProfile -STA -File .\prototype\windows\Start-CxxRelayChat.ps1 -Mode mock
+  powershell.exe -NoProfile -STA -File .\prototype\start.ps1 -Mode mock
 .EXAMPLE
-  powershell.exe -NoProfile -STA -File .\prototype\windows\Start-CxxRelayChat.ps1 -Mode openai
+  powershell.exe -NoProfile -STA -File .\prototype\start.ps1 -Mode openai
 #>
 [CmdletBinding()]
 param(
