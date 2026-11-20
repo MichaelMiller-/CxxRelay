@@ -1,0 +1,48 @@
+/* Optional, understated CxxRelay visual refinements for Material for MkDocs. */
+:root {
+  --cxxrelay-accent: #0b877f;
+  --cxxrelay-dark: #155b72;
+}
+
+.cxxrelay-tagline {
+  display: block;
+  margin: 0.1rem 0 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset h1 {
+  font-weight: 720;
+  letter-spacing: -0.025em;
+}
+
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > li {
+  border-radius: 0.55rem;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+@media (hover: hover) {
+  .md-typeset .grid.cards > ul > li:hover,
+  .md-typeset .grid.cards > li:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--md-shadow-z2);
+  }
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 0.4rem;
+}
+
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #155b72;
+  --md-accent-fg-color: #0b877f;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #246b7d;
+  --md-accent-fg-color: #68cec2;
+}

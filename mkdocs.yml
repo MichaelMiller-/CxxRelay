@@ -1,54 +1,76 @@
-# To view the documentation locally on your machine, use the following steps
-#
-# Clone the repository locally, then on the command line:
-#
-#   python -m venv .venv
-#   source .venv/bin/activate
-#   pip install mkdocs-material
-#   mkdocs new .
-#   mkdocs serve
-#
-#
-site_name: "CxxRelay"
+site_name: CxxRelay Documentation
+site_description: Bringing AI to existing C++ software
+site_url: ""
+docs_dir: docs
+
+# Ensure your existing CI environment provides Material for MkDocs.
 theme:
   name: material
-  features:
-    - navigation.sections
-    - navigation.expand
-    - navigation.instant
-    - navigation.instant.preview
-    - navigation.top
-    - search.suggest
-    - search.highlight
-    - content.tabs.link
-    - content.code.annotate
-    - content.code.annotation
-    - content.code.copy
-    - content.footnote.tooltips
   language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - content.code.copy
+    - content.tabs.link
+    - search.suggest
+    - toc.follow
   palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
     - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
-nav:
-  - 'Welcome & getting started': index.md
+plugins:
+  - search
 
 markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
   - admonition
-  - pymdownx.arithmatex:
-      generic: true
-  - footnotes
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
   - pymdownx.details
+  - pymdownx.highlight
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.mark
-  - attr_list
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
-copyright: |
-  &copy <a href="https://github.com/MichaelMiller-" target="_blank" rel="noopener">Michael Miller</a> &bull; <a href="https://github.com/MichaelMiller-/CxxRelay/blob/master/LICENSE"> License</a>
+extra_css:
+  - assets/stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Vision & User Story:
+      - Overview: vision/index.md
+      - User Story: vision/user-story.md
+      - Use Cases: vision/use-cases.md
+  - Developer Guide:
+      - Overview: developer/index.md
+      - Getting Started: developer/getting-started.md
+      - Register C++ Interfaces: developer/registration.md
+      - Expose AI Tools: developer/tool-calling.md
+      - Chat Prototypes: developer/chat-prototypes.md
+      - Build & Test: developer/build-and-test.md
+  - Technical Reference:
+      - Overview: reference/index.md
+      - Architecture: reference/architecture.md
+      - Reflection & Value: reference/reflection-and-value.md
+      - JSON & Schema: reference/json-and-schema.md
+      - Tool Security: reference/tool-security.md
+      - Chat & IPC: reference/chat-and-ipc.md
+      - Status & Roadmap: reference/status-and-roadmap.md
