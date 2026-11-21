@@ -62,6 +62,7 @@ nav:
   - Developer Guide:
       - Overview: developer/index.md
       - Getting Started: developer/getting-started.md
+      - Visual Studio: developer/visual-studio.md
       - Register C++ Interfaces: developer/registration.md
       - Expose AI Tools: developer/tool-calling.md
       - Chat Prototypes: developer/chat-prototypes.md

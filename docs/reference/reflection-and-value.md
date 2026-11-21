@@ -29,7 +29,7 @@ flowchart LR
 
 ## Design constraints
 
-- Registration is explicit, not automatic full C++ language reflection.
+- Registration is explicit, not automatic full C++ language reflection. But with C++26 reflection there will many other possibilities.
 - `Value` owns transportable data; it does **not** manage the lifetime of arbitrary live C++ objects.
 - The current invoker accepts value-like arguments and `const T&`/`T&&` via decoded temporaries. Mutable `T&` parameters are not supported for transport invocation.
 - Overloaded methods require explicit signature selection when their name is ambiguous.

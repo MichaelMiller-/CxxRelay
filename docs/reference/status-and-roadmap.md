@@ -23,15 +23,4 @@ title: Status & Roadmap
 - A stable and documented C ABI for language-neutral interop.
 - An optional MCP adapter.
 - Stronger session isolation, host transactions, durable audit, and deployment controls.
-- A formal technical specification in LaTeX.
 
-!!! note "Naming transition"
-    The public project name is **CxxRelay**. Existing source artifacts still contain `reflection` names; documentation examples intentionally match the currently available code.
-
-## Documentation strategy
-
-| Layer | Purpose | Intended depth |
-| --- | --- | --- |
-| **Vision & User Story** | Explain motivation and benefits | Concise and accessible |
-| **Developer Guide** | Help developers get started and integrate | Practical examples |
-| **Technical Reference** | Explain interfaces, constraints, and architecture | Focused summary; future formal LaTeX treatment |

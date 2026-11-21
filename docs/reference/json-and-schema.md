@@ -9,9 +9,9 @@ title: JSON & Schema
 ## Serialization
 
 ```cpp
-#include <reflection/core/json.hpp>
+#include <cxxrelay/json.h>
 
-using namespace reflection::core;
+using namespace CxxRelay;
 
 Value request = parse_json(R"({"query":"report"})");
 std::string encoded = to_json(request);

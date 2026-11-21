@@ -39,6 +39,7 @@ When the user asks to rename a document, the assistant can propose the correspon
 - [x] Local browser and Windows Forms prototypes demonstrate the workflow.
 - [ ] A production-ready, reusable GUI integration is available.
 - [ ] Stable C ABI and MCP integration are provided.
+- [ ] Make use of C++26 Reflection.
 
 !!! success "Value delivered"
     Existing functionality remains the source of truth; the assistant becomes an additional way to reach it.

@@ -9,10 +9,11 @@ Existing structures and classes can be described **without modifying their sourc
 ## Register fields
 
 ```cpp
-#include <reflection/core/reflection.hpp>
+#include <cxxrelay/core.h>
 
-using namespace reflection::core;
+using namespace CxxRelay;
 
+// existing user-code
 struct Point3D {
     double x{}, y{}, z{};
 };
@@ -24,7 +25,7 @@ registry.type<Point3D>("Point3D")
     .field("z", &Point3D::z);
 
 Point3D point{1.0, 2.0, 3.0};
-Value data = registry.to_value(point);
+auto data = registry.to_value(point);
 Point3D restored = registry.from_value<Point3D>(data);
 ```
 
@@ -33,6 +34,7 @@ The registry can also describe nested registered structures, `std::vector<T>`, a
 ## Register methods
 
 ```cpp
+// existing user-code
 struct DocumentService {
     std::string search(std::string query) const {
         return "Found: " + query;

@@ -17,11 +17,11 @@ flowchart TD
     VALID -->|Yes| PERM{Host permits access?}
     PERM -->|No| REJECT
     PERM -->|Yes| WRITE{Write operation?}
-    WRITE -->|No| EXEC[Invoke C++ method]
+    WRITE -->|No| REJECT
     WRITE -->|Yes| APPROVE{Human approval?}
     APPROVE -->|No| REJECT
     APPROVE -->|Yes| RECHECK[Recheck authorization]
-    RECHECK --> EXEC
+    RECHECK --> EXEC[Invoke C++ method]
 ```
 
 ## Safeguards

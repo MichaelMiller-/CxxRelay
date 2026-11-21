@@ -51,4 +51,4 @@ Build a small, working integration before changing your existing GUI.
 </div>
 
 !!! tip "Recommended workflow"
-    Configure CMake in your IDE, select the desired `prototype-*` target, and run in **mock** mode first. The C++ worker is built automatically.
+    Configure CMake in your IDE, select the `prototype-*` target, and run in **mock** mode first. 

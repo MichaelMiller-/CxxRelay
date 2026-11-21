@@ -9,11 +9,11 @@ title: Expose AI Tools
 ## Publish a method
 
 ```cpp
-#include <reflection/core/tool_dispatcher.hpp>
+#include <cxxrelay/core.h>
 #include <memory>
 #include <string>
 
-using namespace reflection::core;
+using namespace CxxRelay;
 
 struct DocumentService {
     std::string search(std::string query) const {

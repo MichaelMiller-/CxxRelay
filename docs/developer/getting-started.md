@@ -20,16 +20,14 @@ title: Getting Started
 === "Linux / macOS"
 
     ```bash
-    cmake -S . -B build -DBUILD_TESTING=OFF \
-      -DCXXRELAY_PROTOTYPE_MODE=mock
+    cmake -S . -B build -DBUILD_TESTING=OFF -DCXXRELAY_PROTOTYPE_MODE=mock
     cmake --build build --parallel
     ```
 
 === "Windows / MSVC"
 
     ```powershell
-    cmake -S . -B build -DBUILD_TESTING=OFF `
-      -DCXXRELAY_PROTOTYPE_MODE=mock
+    cmake -S . -B build -DBUILD_TESTING=OFF -DCXXRELAY_PROTOTYPE_MODE=mock
     cmake --build build --config Debug
     ```
 
@@ -51,8 +49,6 @@ title: Getting Started
 
     A native chat window opens; Python and a local HTTP server are not needed.
 
-!!! note "The current C++ names"
-    The project is branded **CxxRelay**, but existing headers, namespaces and targets still use `reflection`, for example `#include <reflection/core/reflection.hpp>` and `reflection::core`.
 
 ## Next steps
 
