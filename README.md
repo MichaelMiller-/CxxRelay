@@ -26,6 +26,10 @@ CxxRelay addresses this challenge with reusable building blocks:
 
 The host application remains in control of its objects, business rules, and permissions.
 
+## Documentation
+
+See the full [documentation](https://michaelmiller-.github.io/CxxRelay) for examples, operational details and other information.
+
 ## Features
 
 | Area | Capabilities |
