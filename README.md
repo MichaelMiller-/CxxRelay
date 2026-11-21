@@ -12,6 +12,10 @@ Whether you maintain an established desktop application, engineering software, o
 
 > **Mission:** Make existing software AI-ready instead of rebuilding it for AI.
 
+## Documentation
+
+See the full [documentation](https://michaelmiller-.github.io/CxxRelay) for examples, operational details and other information.
+
 ## Why CxxRelay?
 
 Many C++ applications contain years of carefully developed domain logic. Making that functionality available through an AI chat often requires interfaces that are both discoverable and machine-readable.
@@ -25,10 +29,6 @@ CxxRelay addresses this challenge with reusable building blocks:
 5. **Interact:** Coordinate tool calls, results, and confirmations in an AI-powered chat.
 
 The host application remains in control of its objects, business rules, and permissions.
-
-## Documentation
-
-See the full [documentation](https://michaelmiller-.github.io/CxxRelay) for examples, operational details and other information.
 
 ## Features
 
